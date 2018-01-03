@@ -1,4 +1,4 @@
-import f, { options } from './functions';
+import f from './functions';
 
 test('functions return correct properties', () => {
   expect(f.m(1)).toMatch(/margin:.+;/);
@@ -28,21 +28,4 @@ test('functions return correct properties', () => {
   expect(f.mih(1)).toMatch(/min-height:.+;/);
 
   expect(f.z(1)).toMatch(/z-index:.+;/);
-});
-
-test('various functions & units', () => {
-  expect(f.m(55)).toBe('margin: 55px;');
-  expect(f.p('55')).toBe('padding: 55px;');
-  expect(f.h('55p')).toBe('height: 55%;');
-  expect(f.w('5.5e')).toBe('width: 5.5em;');
-  expect(f.ml('-5.5x')).toBe('margin-left: -5.5ex;');
-  expect(f.mih('55cm')).toBe('min-height: 55cm;');
-});
-
-test('change default options', () => {
-  options.defaultLengthUnit = 'em';
-  expect(f.m(55)).toBe('margin: 55em;');
-
-  options.defaultLengthUnit = 'px';
-  expect(f.p('55')).toBe('padding: 55px;');
 });

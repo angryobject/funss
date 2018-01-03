@@ -150,64 +150,62 @@ function createStyleSheet() {
   return new StyleSheet();
 }
 
-/* Decorators */
+var units = {
+  p: '%',
+  e: 'em',
+  x: 'ex',
+  r: 'rem',
+  default: 'px'
+};
 
-function lengthDecorator(opts) {
-  return function (target, key, descriptor) {
+var _num_ = '-?\\d+(?:.\\d+)?';
+var _unit_ = Object.keys(units).filter(function (k) {
+  return k !== 'default';
+}).join('|');
+
+var valueMatcher = new RegExp('^(' + _num_ + ')(' + _unit_ + ')?$');
+
+var length$1 = {
+  value: function value(v) {
+    var match = ('' + v).match(valueMatcher);
+
+    if (match === null) {
+      throw new Error('Incrorrect value');
+    }
+
+    return '' + match[1] + (units[match[2]] || units.default);
+  },
+  decorator: function decorator(target, key, descriptor) {
     var fn = descriptor.value;
     descriptor.value = function (v) {
-      return fn(lengthValue(v, opts.defaultLengthUnit));
+      return fn(length$1.value(v));
     };
-  };
-}
-
-/* Values */
-
-function lengthValue(v) {
-  var defaultUnit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'px';
-
-  if (!isNaN(v)) {
-    return '' + v + defaultUnit;
+    descriptor.value.matcher = new RegExp('^(' + key + ')(' + _num_ + '(?:' + _unit_ + ')?)$');
   }
+};
 
-  var units = {
-    p: '%',
-    e: 'em',
-    x: 'ex'
-  };
+var int$1 = {
+  value: function value(v) {
+    var n = +v;
 
-  var _v$match = v.match(/(-?\d+(?:.\d+)?)(\w+)?/),
-      _v$match2 = slicedToArray(_v$match, 3),
-      n = _v$match2[1],
-      u = _v$match2[2];
+    if (isNaN(n) || n % 1 !== 0) {
+      throw new Error('Incrorrect value');
+    }
 
-  return units[u] ? '' + n + units[u] : v;
-}
+    return '' + v;
+  },
+  decorator: function decorator(target, key, descriptor) {
+    var fn = descriptor.value;
+    descriptor.value = function (v) {
+      return fn(int$1.value(v));
+    };
+    descriptor.value.matcher = new RegExp('^(' + key + ')(-?\\d+)$');
+  }
+};
 
-var _dec;
-var _dec2;
-var _dec3;
-var _dec4;
-var _dec5;
-var _dec6;
-var _dec7;
-var _dec8;
-var _dec9;
-var _dec10;
-var _dec11;
-var _dec12;
-var _dec13;
-var _dec14;
-var _dec15;
-var _dec16;
-var _dec17;
-var _dec18;
-var _dec19;
-var _dec20;
-var _dec21;
-var _dec22;
-var _dec23;
-var _dec24;
+var length = length$1.decorator;
+var int = int$1.decorator;
+
 var _obj;
 
 function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
@@ -239,11 +237,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
   return desc;
 }
 
-var options = {
-  defaultLengthUnit: 'px'
-};
-
-var functions = (_dec = lengthDecorator(options), _dec2 = lengthDecorator(options), _dec3 = lengthDecorator(options), _dec4 = lengthDecorator(options), _dec5 = lengthDecorator(options), _dec6 = lengthDecorator(options), _dec7 = lengthDecorator(options), _dec8 = lengthDecorator(options), _dec9 = lengthDecorator(options), _dec10 = lengthDecorator(options), _dec11 = lengthDecorator(options), _dec12 = lengthDecorator(options), _dec13 = lengthDecorator(options), _dec14 = lengthDecorator(options), _dec15 = lengthDecorator(options), _dec16 = lengthDecorator(options), _dec17 = lengthDecorator(options), _dec18 = lengthDecorator(options), _dec19 = lengthDecorator(options), _dec20 = lengthDecorator(options), _dec21 = lengthDecorator(options), _dec22 = lengthDecorator(options), _dec23 = lengthDecorator(options), _dec24 = lengthDecorator(options), _obj = {
+var functions = (_obj = {
   m: function m(v) {
     return 'margin: ' + v + ';';
   },
@@ -316,29 +310,30 @@ var functions = (_dec = lengthDecorator(options), _dec2 = lengthDecorator(option
   mih: function mih(v) {
     return 'min-height: ' + v + ';';
   },
-
-
-  /* Z-INDEX */
   z: function z(v) {
     return 'z-index: ' + v + ';';
   }
-}, _applyDecoratedDescriptor(_obj, 'm', [_dec], Object.getOwnPropertyDescriptor(_obj, 'm'), _obj), _applyDecoratedDescriptor(_obj, 'mx', [_dec2], Object.getOwnPropertyDescriptor(_obj, 'mx'), _obj), _applyDecoratedDescriptor(_obj, 'my', [_dec3], Object.getOwnPropertyDescriptor(_obj, 'my'), _obj), _applyDecoratedDescriptor(_obj, 'ml', [_dec4], Object.getOwnPropertyDescriptor(_obj, 'ml'), _obj), _applyDecoratedDescriptor(_obj, 'mr', [_dec5], Object.getOwnPropertyDescriptor(_obj, 'mr'), _obj), _applyDecoratedDescriptor(_obj, 'mt', [_dec6], Object.getOwnPropertyDescriptor(_obj, 'mt'), _obj), _applyDecoratedDescriptor(_obj, 'mb', [_dec7], Object.getOwnPropertyDescriptor(_obj, 'mb'), _obj), _applyDecoratedDescriptor(_obj, 'p', [_dec8], Object.getOwnPropertyDescriptor(_obj, 'p'), _obj), _applyDecoratedDescriptor(_obj, 'px', [_dec9], Object.getOwnPropertyDescriptor(_obj, 'px'), _obj), _applyDecoratedDescriptor(_obj, 'py', [_dec10], Object.getOwnPropertyDescriptor(_obj, 'py'), _obj), _applyDecoratedDescriptor(_obj, 'pl', [_dec11], Object.getOwnPropertyDescriptor(_obj, 'pl'), _obj), _applyDecoratedDescriptor(_obj, 'pr', [_dec12], Object.getOwnPropertyDescriptor(_obj, 'pr'), _obj), _applyDecoratedDescriptor(_obj, 'pt', [_dec13], Object.getOwnPropertyDescriptor(_obj, 'pt'), _obj), _applyDecoratedDescriptor(_obj, 'pb', [_dec14], Object.getOwnPropertyDescriptor(_obj, 'pb'), _obj), _applyDecoratedDescriptor(_obj, 'l', [_dec15], Object.getOwnPropertyDescriptor(_obj, 'l'), _obj), _applyDecoratedDescriptor(_obj, 'r', [_dec16], Object.getOwnPropertyDescriptor(_obj, 'r'), _obj), _applyDecoratedDescriptor(_obj, 't', [_dec17], Object.getOwnPropertyDescriptor(_obj, 't'), _obj), _applyDecoratedDescriptor(_obj, 'b', [_dec18], Object.getOwnPropertyDescriptor(_obj, 'b'), _obj), _applyDecoratedDescriptor(_obj, 'w', [_dec19], Object.getOwnPropertyDescriptor(_obj, 'w'), _obj), _applyDecoratedDescriptor(_obj, 'h', [_dec20], Object.getOwnPropertyDescriptor(_obj, 'h'), _obj), _applyDecoratedDescriptor(_obj, 'maw', [_dec21], Object.getOwnPropertyDescriptor(_obj, 'maw'), _obj), _applyDecoratedDescriptor(_obj, 'mah', [_dec22], Object.getOwnPropertyDescriptor(_obj, 'mah'), _obj), _applyDecoratedDescriptor(_obj, 'miw', [_dec23], Object.getOwnPropertyDescriptor(_obj, 'miw'), _obj), _applyDecoratedDescriptor(_obj, 'mih', [_dec24], Object.getOwnPropertyDescriptor(_obj, 'mih'), _obj), _obj);
+}, _applyDecoratedDescriptor(_obj, 'm', [length], Object.getOwnPropertyDescriptor(_obj, 'm'), _obj), _applyDecoratedDescriptor(_obj, 'mx', [length], Object.getOwnPropertyDescriptor(_obj, 'mx'), _obj), _applyDecoratedDescriptor(_obj, 'my', [length], Object.getOwnPropertyDescriptor(_obj, 'my'), _obj), _applyDecoratedDescriptor(_obj, 'ml', [length], Object.getOwnPropertyDescriptor(_obj, 'ml'), _obj), _applyDecoratedDescriptor(_obj, 'mr', [length], Object.getOwnPropertyDescriptor(_obj, 'mr'), _obj), _applyDecoratedDescriptor(_obj, 'mt', [length], Object.getOwnPropertyDescriptor(_obj, 'mt'), _obj), _applyDecoratedDescriptor(_obj, 'mb', [length], Object.getOwnPropertyDescriptor(_obj, 'mb'), _obj), _applyDecoratedDescriptor(_obj, 'p', [length], Object.getOwnPropertyDescriptor(_obj, 'p'), _obj), _applyDecoratedDescriptor(_obj, 'px', [length], Object.getOwnPropertyDescriptor(_obj, 'px'), _obj), _applyDecoratedDescriptor(_obj, 'py', [length], Object.getOwnPropertyDescriptor(_obj, 'py'), _obj), _applyDecoratedDescriptor(_obj, 'pl', [length], Object.getOwnPropertyDescriptor(_obj, 'pl'), _obj), _applyDecoratedDescriptor(_obj, 'pr', [length], Object.getOwnPropertyDescriptor(_obj, 'pr'), _obj), _applyDecoratedDescriptor(_obj, 'pt', [length], Object.getOwnPropertyDescriptor(_obj, 'pt'), _obj), _applyDecoratedDescriptor(_obj, 'pb', [length], Object.getOwnPropertyDescriptor(_obj, 'pb'), _obj), _applyDecoratedDescriptor(_obj, 'l', [length], Object.getOwnPropertyDescriptor(_obj, 'l'), _obj), _applyDecoratedDescriptor(_obj, 'r', [length], Object.getOwnPropertyDescriptor(_obj, 'r'), _obj), _applyDecoratedDescriptor(_obj, 't', [length], Object.getOwnPropertyDescriptor(_obj, 't'), _obj), _applyDecoratedDescriptor(_obj, 'b', [length], Object.getOwnPropertyDescriptor(_obj, 'b'), _obj), _applyDecoratedDescriptor(_obj, 'w', [length], Object.getOwnPropertyDescriptor(_obj, 'w'), _obj), _applyDecoratedDescriptor(_obj, 'h', [length], Object.getOwnPropertyDescriptor(_obj, 'h'), _obj), _applyDecoratedDescriptor(_obj, 'maw', [length], Object.getOwnPropertyDescriptor(_obj, 'maw'), _obj), _applyDecoratedDescriptor(_obj, 'mah', [length], Object.getOwnPropertyDescriptor(_obj, 'mah'), _obj), _applyDecoratedDescriptor(_obj, 'miw', [length], Object.getOwnPropertyDescriptor(_obj, 'miw'), _obj), _applyDecoratedDescriptor(_obj, 'mih', [length], Object.getOwnPropertyDescriptor(_obj, 'mih'), _obj), _applyDecoratedDescriptor(_obj, 'z', [int], Object.getOwnPropertyDescriptor(_obj, 'z'), _obj), _obj);
 
-var matcher = new RegExp('^(' + Object.keys(functions).sort(function (a, b) {
-  return b.length - a.length;
-}).join('|') + ')(.+)');
+var matchers = Object.values(functions).map(function (f) {
+  return f.matcher;
+});
 
 var generator = {
-  isValidClassName: function isValidClassName(className) {
-    return matcher.test(className);
-  },
   generateCSS: function generateCSS(className) {
-    var _className$match = className.match(matcher),
-        _className$match2 = slicedToArray(_className$match, 3),
-        name = _className$match2[1],
-        value = _className$match2[2];
+    for (var i = 0; i < matchers.length; i++) {
+      var match = className.match(matchers[i]);
 
-    return functions[name](value);
+      if (match === null) continue;
+
+      var _match = slicedToArray(match, 3),
+          key = _match[1],
+          value = _match[2];
+
+      return functions[key](value);
+    }
+
+    return null;
   }
 };
 
@@ -350,8 +345,11 @@ function funss() {
   }
 
   function addSingleClassName(className) {
-    if (!generator.isValidClassName(className)) return;
-    styleSheet.addRule('.' + className, generator.generateCSS(className));
+    var css = generator.generateCSS(className);
+
+    if (css !== null) {
+      styleSheet.addRule('.' + className, css);
+    }
   }
 
   function parse(target) {

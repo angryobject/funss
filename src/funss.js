@@ -9,8 +9,11 @@ export default function funss() {
   }
 
   function addSingleClassName(className) {
-    if (!generator.isValidClassName(className)) return;
-    styleSheet.addRule(`.${className}`, generator.generateCSS(className));
+    const css = generator.generateCSS(className);
+
+    if (css !== null) {
+      styleSheet.addRule(`.${className}`, css);
+    }
   }
 
   function parse(target) {

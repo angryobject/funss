@@ -1,29 +1,34 @@
-jest.mock('./functions');
-
 import gen from './generator';
 import f from './functions';
 
-test('is valid', () => {
-  expect(gen.isValidClassName('mt20')).toBe(true);
-  expect(gen.isValidClassName('t20')).toBe(true);
-  expect(gen.isValidClassName('px20')).toBe(true);
-  expect(gen.isValidClassName('my20e')).toBe(true);
-  expect(gen.isValidClassName('miw20p')).toBe(true);
-
-  expect(gen.isValidClassName('foo20')).toBe(false);
-  expect(gen.isValidClassName('mf20')).toBe(false);
-  expect(gen.isValidClassName('mw20')).toBe(false);
-  expect(gen.isValidClassName('maww20')).toBe(false);
-  expect(gen.isValidClassName('tt4')).toBe(false);
+Object.keys(f).forEach(k => {
+  const m = f[k].matcher;
+  jest.spyOn(f, k);
+  f[k].matcher = m;
 });
 
-test('generate css', () => {
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
+test('valid selectors', () => {
   gen.generateCSS('mt20');
   expect(f.mt).toHaveBeenCalledWith('20');
 
   gen.generateCSS('mt20p');
   expect(f.mt).toHaveBeenCalledWith('20p');
 
-  gen.generateCSS('mih20em');
-  expect(f.mih).toHaveBeenCalledWith('20em');
+  gen.generateCSS('mih20e');
+  expect(f.mih).toHaveBeenCalledWith('20e');
+});
+
+test('invalid selectors', () => {
+  expect(gen.generateCSS('mtt20')).toBeNull();
+  expect(f.mt).not.toHaveBeenCalled();
+
+  expect(gen.generateCSS('mt20pp')).toBeNull();
+  expect(f.mt).not.toHaveBeenCalled();
+
+  expect(gen.generateCSS('mihe20e')).toBeNull();
+  expect(f.mih).not.toHaveBeenCalled();
 });

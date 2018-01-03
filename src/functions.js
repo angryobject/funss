@@ -1,115 +1,112 @@
-import { lengthDecorator } from './values';
-
-export const options = {
-  defaultLengthUnit: 'px',
-};
+import { length, int } from './values/index';
 
 export default {
   /* MARGIN */
-  @lengthDecorator(options)
+  @length
   m(v) {
     return `margin: ${v};`;
   },
-  @lengthDecorator(options)
+  @length
   mx(v) {
     return `margin-left: ${v}; margin-right: ${v};`;
   },
-  @lengthDecorator(options)
+  @length
   my(v) {
     return `margin-top: ${v}; margin-bottom: ${v};`;
   },
-  @lengthDecorator(options)
+  @length
   ml(v) {
     return `margin-left: ${v};`;
   },
-  @lengthDecorator(options)
+  @length
   mr(v) {
     return `margin-right: ${v};`;
   },
-  @lengthDecorator(options)
+  @length
   mt(v) {
     return `margin-top: ${v};`;
   },
-  @lengthDecorator(options)
+  @length
   mb(v) {
     return `margin-bottom: ${v};`;
   },
 
   /* PADDING */
-  @lengthDecorator(options)
+  @length
   p(v) {
     return `padding: ${v};`;
   },
-  @lengthDecorator(options)
+  @length
   px(v) {
     return `padding-left: ${v}; padding-right: ${v};`;
   },
-  @lengthDecorator(options)
+  @length
   py(v) {
     return `padding-top: ${v}; padding-bottom: ${v};`;
   },
-  @lengthDecorator(options)
+  @length
   pl(v) {
     return `padding-left: ${v};`;
   },
-  @lengthDecorator(options)
+  @length
   pr(v) {
     return `padding-right: ${v};`;
   },
-  @lengthDecorator(options)
+  @length
   pt(v) {
     return `padding-top: ${v};`;
   },
-  @lengthDecorator(options)
+  @length
   pb(v) {
     return `padding-bottom: ${v};`;
   },
 
   /* POSITION */
-  @lengthDecorator(options)
+  @length
   l(v) {
     return `left: ${v};`;
   },
-  @lengthDecorator(options)
+  @length
   r(v) {
     return `right: ${v};`;
   },
-  @lengthDecorator(options)
+  @length
   t(v) {
     return `top: ${v};`;
   },
-  @lengthDecorator(options)
+  @length
   b(v) {
     return `bottom: ${v};`;
   },
 
   /* SIZE */
-  @lengthDecorator(options)
+  @length
   w(v) {
     return `width: ${v};`;
   },
-  @lengthDecorator(options)
+  @length
   h(v) {
     return `height: ${v};`;
   },
-  @lengthDecorator(options)
+  @length
   maw(v) {
     return `max-width: ${v};`;
   },
-  @lengthDecorator(options)
+  @length
   mah(v) {
     return `max-height: ${v};`;
   },
-  @lengthDecorator(options)
+  @length
   miw(v) {
     return `min-width: ${v};`;
   },
-  @lengthDecorator(options)
+  @length
   mih(v) {
     return `min-height: ${v};`;
   },
 
   /* Z-INDEX */
+  @int
   z(v) {
     return `z-index: ${v};`;
   },
