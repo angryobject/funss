@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf8">
+  <meta name="viewport" content="width=device-width">
+  <title>FunSS Demo</title>
+  <style>
+    *,
+    *:after,
+    *:before {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 class="my20 px10">FunSS Demo</h1>
+
+  <script src="../dist/funss.umd.js"></script>
+  <script>
+    var ss = funss();
+    ss.parse(document.body);
+    ss.observe(document.body);
+  </script>
+</body>
+
+</html>
