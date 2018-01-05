@@ -2,105 +2,105 @@ import { length, int } from './values/index';
 
 export default {
   /* MARGIN */
-  @length()
+  @length
   m(v) {
     return `margin: ${v};`;
   },
-  @length()
+  @length
   mx(v) {
     return `margin-left: ${v}; margin-right: ${v};`;
   },
-  @length()
+  @length
   my(v) {
     return `margin-top: ${v}; margin-bottom: ${v};`;
   },
-  @length()
+  @length
   ml(v) {
     return `margin-left: ${v};`;
   },
-  @length()
+  @length
   mr(v) {
     return `margin-right: ${v};`;
   },
-  @length()
+  @length
   mt(v) {
     return `margin-top: ${v};`;
   },
-  @length()
+  @length
   mb(v) {
     return `margin-bottom: ${v};`;
   },
 
   /* PADDING */
-  @length()
+  @length
   p(v) {
     return `padding: ${v};`;
   },
-  @length()
+  @length
   px(v) {
     return `padding-left: ${v}; padding-right: ${v};`;
   },
-  @length()
+  @length
   py(v) {
     return `padding-top: ${v}; padding-bottom: ${v};`;
   },
-  @length()
+  @length
   pl(v) {
     return `padding-left: ${v};`;
   },
-  @length()
+  @length
   pr(v) {
     return `padding-right: ${v};`;
   },
-  @length()
+  @length
   pt(v) {
     return `padding-top: ${v};`;
   },
-  @length()
+  @length
   pb(v) {
     return `padding-bottom: ${v};`;
   },
 
   /* POSITION */
-  @length()
+  @length
   l(v) {
     return `left: ${v};`;
   },
-  @length()
+  @length
   r(v) {
     return `right: ${v};`;
   },
-  @length()
+  @length
   t(v) {
     return `top: ${v};`;
   },
-  @length()
+  @length
   b(v) {
     return `bottom: ${v};`;
   },
 
   /* SIZE */
-  @length({ positive: true })
+  @length
   w(v) {
     return `width: ${v};`;
   },
-  @length({ positive: true })
+  @length
   h(v) {
     return `height: ${v};`;
   },
-  @length({ positive: true })
+  @length
   maw(v) {
     return `max-width: ${v};`;
   },
-  @length({ positive: true })
+  @length
   mah(v) {
     return `max-height: ${v};`;
   },
-  @length({ positive: true })
+  @length
   miw(v) {
     return `min-width: ${v};`;
   },
-  @length({ positive: true })
+  @length
   mih(v) {
     return `min-height: ${v};`;
   },

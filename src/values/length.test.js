@@ -1,39 +1,15 @@
-import l from './length';
+import length from './length';
 
-test('length value', () => {
-  expect(l.value(55)).toBe('55px');
-  expect(l.value(-55)).toBe('-55px');
-  expect(l.value('-55')).toBe('-55px');
-  expect(l.value('55p')).toBe('55%');
-  expect(l.value('-5.5p')).toBe('-5.5%');
-  expect(l.value('5.5e')).toBe('5.5em');
-  expect(l.value('-5.5x')).toBe('-5.5ex');
-  expect(l.value('55r')).toBe('55rem');
-
-  expect(() => l.value('55rr')).toThrow();
-  expect(() => l.value('55m')).toThrow();
-  expect(() => l.value('5.5-')).toThrow();
-});
-
-test('length decorator', () => {
-  jest.spyOn(l, 'value');
-
-  const obj = { fn: jest.fn() };
-  const dec = Object.getOwnPropertyDescriptor(obj, 'fn');
-
-  l.decorator()(obj, 'fn', dec);
-
-  expect(dec.value.matcher).toBeInstanceOf(RegExp);
-
-  dec.value(55);
-  dec.value(55);
-
-  expect(l.value).toHaveBeenCalledTimes(2);
-  expect(l.value).toHaveBeenCalledWith(55);
-
-  expect(obj.fn).toHaveBeenCalledTimes(2);
-  expect(obj.fn).toHaveBeenCalledWith('55px');
-
-  l.value.mockReset();
-  l.value.mockRestore();
+test('length', () => {
+  expect(length(55)).toBe('55px');
+  expect(length(-55)).toBe('-55px');
+  expect(length('-55')).toBe('-55px');
+  expect(length('55p')).toBe('55%');
+  expect(length('-5.5p')).toBe('-5.5%');
+  expect(length('5.5e')).toBe('5.5em');
+  expect(length('-5.5x')).toBe('-5.5ex');
+  expect(length('55r')).toBe('55rem');
+  expect(length('55rr')).toBeNull();
+  expect(length('55m')).toBeNull();
+  expect(length('5.5-')).toBeNull();
 });

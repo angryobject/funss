@@ -1,6 +1,6 @@
 import functions from './functions';
 
-const keyMatcher = new RegExp(
+const matcher = new RegExp(
   '^(' +
     Object.keys(functions)
       .sort((a, b) => b.length - a.length)
@@ -8,28 +8,12 @@ const keyMatcher = new RegExp(
     ')(.+)$'
 );
 
-function keyMatch(className) {
-  const match = className.match(keyMatcher);
-  if (match === null) return null;
-  return match[1];
-}
-
-function valueMatch(className, key) {
-  const match = className.match(functions[key].matcher);
-  if (match === null) return null;
-  return match[2];
-}
-
 export default {
   generateCSS(className) {
-    const key = keyMatch(className);
+    const match = className.match(matcher);
 
-    if (!key) return null;
+    if (match === null) return null;
 
-    const value = valueMatch(className, key);
-
-    if (!value) return null;
-
-    return functions[key](value);
+    return functions[match[1]](match[2]);
   },
 };

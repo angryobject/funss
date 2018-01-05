@@ -11,7 +11,7 @@ export default function funss() {
   function addSingleClassName(className) {
     const css = generator.generateCSS(className);
 
-    if (css !== null) {
+    if (css) {
       styleSheet.addRule(`.${className}`, css);
     }
   }

@@ -1,11 +1,7 @@
 import gen from './generator';
 import f from './functions';
 
-Object.keys(f).forEach(k => {
-  const m = f[k].matcher;
-  jest.spyOn(f, k);
-  f[k].matcher = m;
-});
+Object.keys(f).forEach(k => jest.spyOn(f, k));
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -22,13 +18,21 @@ test('valid selectors', () => {
   expect(f.mih).toHaveBeenCalledWith('20e');
 });
 
-test('invalid selectors', () => {
+test('valid selector invalid value', () => {
   expect(gen.generateCSS('mtt20')).toBeNull();
-  expect(f.mt).not.toHaveBeenCalled();
-
+  expect(f.mt).toHaveBeenCalledWith('t20');
   expect(gen.generateCSS('mt20pp')).toBeNull();
-  expect(f.mt).not.toHaveBeenCalled();
-
+  expect(f.mt).toHaveBeenCalledWith('20pp');
   expect(gen.generateCSS('mihe20e')).toBeNull();
-  expect(f.mih).not.toHaveBeenCalled();
+  expect(f.mih).toHaveBeenCalledWith('e20e');
+});
+
+test('invalid selector', () => {
+  expect(gen.generateCSS('foo')).toBeNull();
+  expect(gen.generateCSS('_i8')).toBeNull();
+  expect(gen.generateCSS('ddt')).toBeNull();
+
+  Object.keys(f).forEach(k => {
+    expect(f[k]).not.toHaveBeenCalled();
+  });
 });
