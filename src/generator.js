@@ -1,6 +1,6 @@
 import functions from './functions';
 
-const shallowMatcher = new RegExp(
+const keyMatcher = new RegExp(
   '^(' +
     Object.keys(functions)
       .sort((a, b) => b.length - a.length)
@@ -9,7 +9,7 @@ const shallowMatcher = new RegExp(
 );
 
 function keyMatch(className) {
-  const match = className.match(shallowMatcher);
+  const match = className.match(keyMatcher);
   if (match === null) return null;
   return match[1];
 }

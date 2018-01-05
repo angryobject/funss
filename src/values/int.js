@@ -9,10 +9,17 @@ const int = {
     return '' + v;
   },
 
-  decorator(target, key, descriptor) {
-    const fn = descriptor.value;
-    descriptor.value = v => fn(int.value(v));
-    descriptor.value.matcher = new RegExp(`^(${key})(-?\\d+)$`);
+  decorator(opts = {}) {
+    return (target, key, descriptor) => {
+      const fn = descriptor.value;
+      descriptor.value = v => fn(int.value(v));
+
+      if (opts.positive) {
+        descriptor.value.matcher = new RegExp(`^(${key})(\\d+)$`);
+      } else {
+        descriptor.value.matcher = new RegExp(`^(${key})(-?\\d+)$`);
+      }
+    };
   },
 };
 

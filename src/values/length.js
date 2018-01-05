@@ -6,12 +6,13 @@ const units = {
   default: 'px',
 };
 
-const _num_ = '-?\\d+(?:.\\d+)?';
+const _num_any_ = '-?\\d+(?:.\\d+)?';
+const _num_positive_ = '\\d+(?:.\\d+)?';
 const _unit_ = Object.keys(units)
   .filter(k => k !== 'default')
   .join('|');
 
-const valueMatcher = new RegExp(`^(${_num_})(${_unit_})?$`);
+const valueMatcher = new RegExp(`^(${_num_any_})(${_unit_})?$`);
 
 const length = {
   value(v) {
@@ -24,10 +25,21 @@ const length = {
     return `${match[1]}${units[match[2]] || units.default}`;
   },
 
-  decorator(target, key, descriptor) {
-    const fn = descriptor.value;
-    descriptor.value = v => fn(length.value(v));
-    descriptor.value.matcher = new RegExp(`^(${key})(${_num_}(?:${_unit_})?)$`);
+  decorator(opts = {}) {
+    return (target, key, descriptor) => {
+      const fn = descriptor.value;
+      descriptor.value = v => fn(length.value(v));
+
+      if (opts.positive) {
+        descriptor.value.matcher = new RegExp(
+          `^(${key})(${_num_positive_}(?:${_unit_})?)$`
+        );
+      } else {
+        descriptor.value.matcher = new RegExp(
+          `^(${key})(${_num_any_}(?:${_unit_})?)$`
+        );
+      }
+    };
   },
 };
 

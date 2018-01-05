@@ -16,7 +16,7 @@ test('int decorator', () => {
   const obj = { fn: jest.fn() };
   const dec = Object.getOwnPropertyDescriptor(obj, 'fn');
 
-  int.decorator(obj, 'fn', dec);
+  int.decorator()(obj, 'fn', dec);
 
   expect(dec.value.matcher).toBeInstanceOf(RegExp);
 

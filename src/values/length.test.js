@@ -21,7 +21,7 @@ test('length decorator', () => {
   const obj = { fn: jest.fn() };
   const dec = Object.getOwnPropertyDescriptor(obj, 'fn');
 
-  l.decorator(obj, 'fn', dec);
+  l.decorator()(obj, 'fn', dec);
 
   expect(dec.value.matcher).toBeInstanceOf(RegExp);
 
